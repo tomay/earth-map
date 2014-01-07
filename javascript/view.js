@@ -1,4 +1,19 @@
 $(function(){
+
+  $("#container").hover(function () {
+    $("#container").animate({
+          height: "330px"
+      }, {
+          queue: false
+    });
+    }, function () {
+    $("#container").animate({
+        height: "35px"
+      }, {
+          queue: false
+      });
+    });
+
   var map = L.map('map').setView([30, -90], 4);
   var googleLayer    = new L.Google('ROADMAP');
   var cloudmadeLayer = new L.TileLayer('http://{s}.tile.cloudmade.com/950091b358f4414d81a9c6f5044d082c/997/256/{z}/{x}/{y}.png', {
@@ -30,23 +45,10 @@ $(function(){
   };
 
   var overlayMaps = {
-    "Forest cover": wmsForestCover,
+    "Landcover": wmsForestCover,
     "Rivers": wmsRivers
   };
 
   L.control.layers(baseMaps, overlayMaps).addTo(map);
-
-  function onMapClick(e) {
-    marker = new L.marker(e.latlng, {draggable:'true'});
-    marker.on('dragend', function(event){
-      var marker = event.target;
-      var position = marker.getLatLng();
-      marker.setLatLng(new L.LatLng(position.lat, position.lng),{draggable:'true'});
-      map.panTo(new L.LatLng(position.lat, position.lng))
-    });
-    map.addLayer(marker);
-  };
-
-  map.on('click', onMapClick);
 
 });
