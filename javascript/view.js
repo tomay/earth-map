@@ -1,3 +1,49 @@
+function zoomToAddress(map, address) {
+  var bounds
+  var r
+  var geocoder = new google.maps.Geocoder();
+
+  geocoder = new google.maps.Geocoder();
+  geocoder.geocode( {'address': address}, function(results, status) {
+    if (status == google.maps.GeocoderStatus.OK) {
+      r = results
+
+        map.fitBounds([
+        [results[0].geometry.viewport.getSouthWest().lat(),
+          results[0].geometry.viewport.getSouthWest().lng()],
+        [results[0].geometry.viewport.getNorthEast().lat(),
+      results[0].geometry.viewport.getNorthEast().lng()]
+      ]);
+    }
+  });
+}
+
+function clearTextarea() {
+  $('#location-text').focus(function() {
+    $(this).val('');
+  });
+}
+
+function bindTextarea(map) {
+
+  $('#location-text').bind("enterKey",function(e){
+    address = $('#location-text').val()
+    zoomToAddress(map, address)
+  });
+
+  $('#location-text').keydown(function(e){
+    if(e.keyCode == 13)
+      {
+        var inval= $('#location-text').val()
+        var outval = inval.replace(/\n/g, "")
+        $('#location-text').val(outval)
+        $(this).trigger("enterKey");
+        return false;
+      }
+  });
+}
+
+// on ready
 $(function(){
 
   $("#container").hover(function () {
@@ -72,4 +118,8 @@ $(function(){
 
   L.control.layers(baseMaps, overlayMaps).addTo(map);
 
+  bindTextarea(map);
+  clearTextarea();
+
 });
+
