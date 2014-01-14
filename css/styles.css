@@ -57,5 +57,21 @@ body,html {
   position:absolute;
   bottom:0;
   height:45px;
-  z-index:1000 !important;
+  z-index:10 !important;
+}
+
+#location {
+  position:absolute;
+  left:30%;
+  z-index:11 !important;
+}
+
+#location-text {
+  font-size:20px;
+  padding:7px;
+  margin:10px;
+  resize:none;
+  overflow:auto;
+  resize:none;
+  border-radius: 3px;
 }
