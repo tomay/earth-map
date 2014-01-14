@@ -29,12 +29,31 @@ $(function(){
     transparent: true,
     version: '1.1.0',
     attribution: ""
-  }).addTo(map);
+  });
+
+  var wmsLastWild = new L.tileLayer.wms("http://sedac.ciesin.columbia.edu/geoserver/gwc/service/wms", {
+    layers: 'wildareas-v2:wildareas-v2-last-of-the-wild-geographic',
+    format: 'image/png',
+    transparent: true,
+    opacity: 0.65,
+    version: '1.1.1',
+    attribution: ""
+  });
 
   var wmsRivers = L.tileLayer.wms("http://162.243.248.31:8080/geoserver/opengeo/wms", {
     layers: 'opengeo:rivers',
     format: 'image/png',
     transparent: true,
+    opacity: 0.85,
+    version: '1.1.0',
+    attribution: ""
+  }).addTo(map);
+
+  var wmsRivsBuff = L.tileLayer.wms("http://162.243.248.31:8080/geoserver/opengeo/wms", {
+    layers: 'opengeo:rivers_buffer',
+    format: 'image/png',
+    transparent: true,
+    opacity: 0.85,
     version: '1.1.0',
     attribution: ""
   }).addTo(map);
@@ -46,7 +65,9 @@ $(function(){
 
   var overlayMaps = {
     "Landcover": wmsForestCover,
-    "Rivers": wmsRivers
+    "Last of the Wild": wmsLastWild,
+    "Rivers": wmsRivers,
+    "River buffers": wmsRivsBuff
   };
 
   L.control.layers(baseMaps, overlayMaps).addTo(map);
