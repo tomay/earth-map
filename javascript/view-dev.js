@@ -1,64 +1,75 @@
-function zoomToAddress(map, address) {
-  var bounds
-  var r
-  var geocoder = new google.maps.Geocoder();
+var View = {
 
-  geocoder = new google.maps.Geocoder();
-  geocoder.geocode( {'address': address}, function(results, status) {
-    if (status == google.maps.GeocoderStatus.OK) {
-      r = results
-
+  zoomToAddress: function(map,address) {
+    var geocoder = new google.maps.Geocoder();
+    geocoder.geocode( {'address': address}, function(results, status) {
+      if (status == google.maps.GeocoderStatus.OK) {
         map.fitBounds([
-        [results[0].geometry.viewport.getSouthWest().lat(),
+          [results[0].geometry.viewport.getSouthWest().lat(),
           results[0].geometry.viewport.getSouthWest().lng()],
-        [results[0].geometry.viewport.getNorthEast().lat(),
-      results[0].geometry.viewport.getNorthEast().lng()]
-      ]);
-    }
-  });
-}
+          [results[0].geometry.viewport.getNorthEast().lat(),
+          results[0].geometry.viewport.getNorthEast().lng()]
+        ]);
+      }
+    });
+  },
 
-function clearTextarea() {
-  $('#location-text').focus(function() {
-    $(this).val('');
-  });
-}
+  bindTextarea: function(map) {
+    $('#location-text').bind("enterKey",function(e){
+      address = $('#location-text').val()
+      View.zoomToAddress(map, address)
+    });
 
-function bindTextarea(map) {
-
-  $('#location-text').bind("enterKey",function(e){
-    address = $('#location-text').val()
-    zoomToAddress(map, address)
-  });
-
-  $('#location-text').keydown(function(e){
-    if(e.keyCode == 13)
-      {
+    $('#location-text').keydown(function(e){
+      if(e.keyCode == 13) {
         var inval= $('#location-text').val()
         var outval = inval.replace(/\n/g, "")
         $('#location-text').val(outval)
         $(this).trigger("enterKey");
         return false;
       }
-  });
+    });
+  },
+
+  clearTextarea: function() {
+    $('#location-text').focus(function() {
+      $(this).val('');
+    });
+  }
+
 }
 
 // on ready
 $(function(){
+  // get class list from elem
+  !function(e){e.fn.classes=function(t){var n=[];e.each(this,function(e,t){var r=t.className.split(/\s+/);for(var i in r){var s=r[i];if(-1===n.indexOf(s)){n.push(s)}}});if("function"===typeof t){for(var r in n){t(n[r])}}return n}}(jQuery);
 
   $("#container").hover(function () {
     $("#container").animate({
-          height: "330px"
+        height: "350px"
       }, {
-          queue: false
+        queue: false
     });
     }, function () {
     $("#container").animate({
         height: "35px"
       }, {
-          queue: false
+        queue: false
       });
-    });
+  });
+
+  $('span > a').click(function() {
+    // debugger
+    // toggle active link span
+    var activeClass = $('span.active').classes()[1]
+    $('span.nav-item').removeClass('active');
+    $(this).parent().addClass('active');
+
+    // toggle hidden paragraph
+    $("div." + activeClass).addClass('hidden')
+    var thisClass = $(this).parent().classes()[1]
+    $("div." + thisClass).removeClass('hidden')
+  });
 
   var map = L.map('map').setView([30, -90], 4);
   var googleLayer    = new L.Google('ROADMAP');
@@ -118,8 +129,8 @@ $(function(){
 
   L.control.layers(baseMaps, overlayMaps).addTo(map);
 
-  bindTextarea(map);
-  clearTextarea();
+  View.bindTextarea(map);
+  View.clearTextarea();
 
 });
 

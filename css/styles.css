@@ -15,7 +15,6 @@ body,html {
   width:220px;
   height:45px;
   left:250px;
-  background-color:#000;
   color: white;
   text-align: center;
   border-top-left-radius: 7px;
@@ -28,7 +27,7 @@ body,html {
   text-decoration:none;
   text-align:center;
   text-shadow:1px 1px 0px black;
-  line-height:40px;
+  line-height:40px;x
   font-size:20px;
   border-top-left-radius: 7px;
 }
@@ -36,9 +35,9 @@ body,html {
 #tab-body {
   position:relative;
   width:600px;
-  height:345px;
+  height:260px;
   margin:0;
-  padding:15px 15px 15px 15px;
+  padding:15px 15px 0 15px;
   font-size:14px;
   text-align: left;
 }
@@ -51,6 +50,44 @@ body,html {
   font-style:normal;
   text-decoration:none;
   border-top-right-radius: 7px;
+}
+
+#nav-box {
+  width:600px;
+  height:25px;
+  background-color:#0A0A0F;
+  padding:0 15px 5px 15px;
+}
+
+#nav-container {
+  position:relative;
+  float:right;
+  width:130px;
+}
+
+.nav-item:hover {
+  background-color: #6600CC;
+}
+
+.nav-item a {
+  text-decoration:none;
+  color: white;
+}
+
+.nav-item.active {
+  background-color:#246BB2;
+}
+
+.nav-item {
+  width:10px;
+  height:15px;
+  font-family:"Courier", sans-serif;
+  font-size: 14px;
+  font-weight:bold;
+  font-style:normal;
+  background-color:#29293D;
+  padding:3px 6px;
+  margin:0 4px;
 }
 
 #container {
@@ -78,4 +115,14 @@ body,html {
   overflow:auto;
   resize:none;
   border-radius: 3px;
+}
+
+.headline {
+  font-size:17px;
+  text-decoration:underline;
+  padding:0 0 7px;
+}
+
+.hidden {
+  display:none;
 }
