@@ -115,6 +115,15 @@ $(function(){
     attribution: ""
   }).addTo(map);
 
+  var wmsWdpa = L.tileLayer.wms("http://162.243.248.31:8080/geoserver/opengeo/wms", {
+    layers: 'opengeo:wdpa',
+    format: 'image/png',
+    transparent: true,
+    opacity: 0.65,
+    version: '1.1.0',
+    attribution: ""
+  });
+
   var baseMaps = {
     "OSM": cloudmadeLayer,
     "Google": googleLayer
@@ -124,7 +133,8 @@ $(function(){
     "Landcover": wmsForestCover,
     "Last of the Wild": wmsLastWild,
     "Rivers": wmsRivers,
-    "River buffers": wmsRivsBuff
+    "River buffers": wmsRivsBuff,
+    "Protected areas": wmsWdpa
   };
 
   L.control.layers(baseMaps, overlayMaps).addTo(map);
